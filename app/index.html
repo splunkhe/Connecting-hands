@@ -1,0 +1,335 @@
+<html ng-app="myApp">
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular-route.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='controller/lightcontroller.js'></script>
+
+    <link rel = "stylesheet" type = "text/css" href ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<script>
+    $(document).ready(function () {
+        viewGraph();
+    });
+
+    function viewGraph() {
+        $('.column').css('height', '0');
+        $('table tr').each(function (index) {
+            var ha = $(this).children('td').eq(1).text();
+            $('#col' + index).animate({ height: ha }, 1500).html("<div>" + ha + "</div>");
+        });
+    }
+
+
+</script>
+<style>
+
+    .light-container{
+        width: 100%;
+    }
+    .btn-container, .bulb-container{
+        width: 50%;
+        float: left;
+    }
+    .bulb-container p{
+        text-align: left;
+    }
+    .green{
+        color: #1BC000;
+    }
+    .red{
+        color: #EB0808;
+    }
+
+
+    /* The switch - the box around the slider */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {display:none;}
+
+    /* The slider */
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    #contenitore {
+        position: relative;
+        width: 800px;
+        margin: 20px auto;
+        text-align: center;
+        overflow: hidden;
+        font: 14px 'Trebuchet MS', sans serif;
+    }
+
+    .left {
+        float: left;
+        width: 48%;
+    }
+
+    #grafico {
+        position: relative;
+        height: 300px;
+        border-left: 2px solid #000000;
+        border-bottom: 2px solid #000000;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .riga {
+        position: absolute;
+        left: 0;
+        height: 1px;
+        background-color: gray;
+        width: 100%;
+    }
+
+    .riga div {
+        float: left;
+        margin: -8px 0 0 -40px;
+    }
+
+    .canc {
+        clear: both;
+    }
+
+    table {
+        width: 60%;
+        background-color: white;
+        color: #000;
+        margin: 1em auto;
+    }
+
+    table caption {
+        background-color: #D8EED8;
+        color: #004156;
+        text-align: left;
+    }
+
+    table tr:nth-child(2n) {
+        background-color: #D8EED8;
+    }
+
+    table tr:nth-child(2n+1) {
+        background-color: #BFDFFF;
+    }
+
+    table td {
+        text-align: center;
+        border-bottom: 1px solid #CDCDCD;
+        padding: 6px;
+    }
+
+    .column {
+        position: absolute;
+        width: 16%;
+        bottom: 0;
+        background-color: #003366;
+        margin-left: 5%;
+    }
+
+    div.button {
+        margin: 0 auto;
+        text-align: center;
+        width: 100px;
+        background-color: #fff;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        padding: 8px;
+        color: #E1E2CF;
+        cursor: pointer;
+    }
+
+    .column div {
+        margin-top: -20px;
+        height: 20px;
+    }
+
+
+
+    .legend {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        background: #FFF;
+        padding: 15px;
+        font-size: 13px;
+        box-shadow: 1px 1px 0 #DDD,
+        2px 2px 0 #BBB;
+    }
+    .legend li {
+        width: 110px;
+        height: 1.25em;
+        margin-bottom: 0.7em;
+        padding-left: 0.5em;
+        border-left: 1.25em solid black;
+    }
+    .legend em {
+        font-style: normal;
+    }
+    .legend span {
+        float: right;
+    }
+
+</style>
+
+<body ng-app="myapp">
+<div class="container">
+<div class="row">
+<div class="col-sm-12">
+<h1 style="text-align: center;border:1px solid #3232ff;background:#3232ff;">Home automation dashboard</h1>
+    <div class="container">
+        <div class="row">
+<div class="col-sm-6" style="border:1px solid blue; width: 554px;height:200px;">
+    <div class="light-container" id="light" ng-controller="lightController">
+        <div class="btn-container">
+            <button class="{{lightOn ? 'btn btn-danger' : 'btn btn-success'}}" ng-click="toggleLight()">{{lightOn ? "OFF" : "ON"}}</button>
+        </div>
+        <div class="bulb-container">
+            <div>
+                <div ng-show="lightOn">
+                    <figure class="figure">
+                        <img src="img/on.png" alt="Light Bulb">
+                        <figcaption class="figure-caption green">Lights ON!!!</figcaption>
+                        <p class="green"></p>
+                    </figure>
+                </div>
+                <div ng-hide="lightOn">
+                    <figure class="figure">
+                        <img src="img/off.png" alt="Light Bulb">
+                        <figcaption class="figure-caption red">Lights OFF!!!</figcaption>
+                        <p class="red"></p>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="col-sm-6" ng-controller="panel1Controller" style="border:1px solid blue;width: 554px; height: 200px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                 <h1>AC</h1><br>
+                    <h1>Status:<label class="switch">
+                        <input type="checkbox">
+                        <div class="slider round" onchange="callservice(1)"></div>
+                    </label></h1>
+                </div>
+                <br>
+                <div class="col-sm-6" >
+                    <h1>Temperature</h1><br>
+                    <div style="border:1px solid black;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+    <div class="col-sm-6" style="border:1px solid blue;width: 554px; height: 200px;">
+<p>sdsd</p>
+    </div>blue
+    <div class="col-sm-6" style="border:1px solid blue;    width: 554px; height: 200px;">
+
+        <div id="contenitore">
+            <div class="left">
+                <table style="display:none">
+                    <caption>Date table</caption>
+                    <tbody>
+                    <tr><td>A</td><td>89%</td><td style="background-color:#336699">&nbsp;</td></tr>
+                    <tr><td>B</td><td>68%</td><td style="background-color:#003366">&nbsp;</td></tr>
+                    <tr><td>C</td><td>30%</td><td style="background-color:#ff6600">&nbsp;</td></tr>
+                    <tr><td>D</td><td>20%</td><td style="background-color:#ffcc00">&nbsp;</td></tr>
+                    </tbody>
+                </table>
+                <div class="button" onclick="viewGraph()"></div>
+            </div>
+            <div class="left">
+                <div id="grafico">
+                    <div class="riga" ><div>75%</div></div>
+                    <div class="riga"><div>50%</div></div>
+                    <div class="riga"><div>25%</div></div>
+                    <div id="col0" style="left:0; background-color:#FA2F04;" class="column"></div>
+                    <div id="col1" style="left:25%; background-color:#06B02A;" class="column"></div>
+                    <div id="col2" style="left:50%; background-color:#F0ED06;" class="column"></div>
+                    <!-- <div id="col3" style="left:75%; background-color:#ffcc00;" class="column"></div>-->
+                </div>
+            </div>
+            <div style="padding-top:350px;padding-left:450px;">
+                <ul class="legend">
+                    <li style="background-color:#FA2F04;">
+                        <em>High</em>
+                    </li>
+                    <li style="background-color:#06B02A;">
+                        <em>Medium</em>
+                    </li>
+                    <li style="background-color:#F0ED06">
+                        <em>Normal</em>
+                    </li>
+                </ul>
+            </div>
+            <div class="canc"></div>
+        </div>
+
+
+    </div>
+<div>
+</div>
+
+</div>
+</div>
+</div>
+</body>
+</html>
